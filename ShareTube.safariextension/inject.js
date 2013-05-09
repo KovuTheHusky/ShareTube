@@ -116,30 +116,23 @@ function run() {
 
 	// parse fmt_url_map
 	var videoURL = new Array();
-	var sep1 = '%2C', sep2 = '%26', sep3 = '%3D';
-	if (videoFormats.indexOf(',') > -1) {
-		sep1 = ',';
-		sep2 = '\\u0026';
-		sep3 = '=';
-		if (videoFormats.indexOf('&') > -1)
-			sep2 = '&';
-	}
+	var sep = '%2C';
+	if (videoFormats.indexOf(',') > -1)
+		sep = ',';
 
-	var videoFormatsGroup = videoFormats.split(sep1);
-	for (var i = 0; i < videoFormatsGroup.length; i++) {
-		var exploded = videoFormatsGroup[i];
-		exploded = unescape(unescape(exploded)).replace(/\\\//g, '/').replace(/\\u0026/g, '&').replace(/url=.*\?/, '');
-		exploded = exploded.split('&');
+	var videoFormatsGroup = videoFormats.split(sep);
+	for(var i = 0; i < videoFormatsGroup.length; i++) {
+		var pairs = unescape(unescape(videoFormatsGroup[i])).replace(/\\u0026/g, '&').replace(/url=.*\?/g, '').split('&');
 		var params = new Array();
-		for (var j = 0; j < exploded.length; j++) {
-			var param = exploded[j].split('=');
+		for(var j = 0; j < pairs.length; j++) {
+			var param = pairs[j].split('=');
 			params[param[0]] = param[1];
 		}
 		videoURL[params['itag']] = 'http://youtube.com/videoplayback?ratebypass=' + params['ratebypass'] + '&sver=' + params['sver'] + '&expire=' + params['expire'] + '&key=' + params['key'] + '&id=' + params['id'] + '&mv=' + params['mv'] + '&sparams=' + params['sparams'] + '&ipbits=' + params['ipbits'] + '&ip=' + params['ip'] + '&itag=' + params['itag'] + '&mt=' + params['mt'] + '&fexp=' + params['fexp'] + '&ms=' + params['ms'] + '&source=' + params['source'] + '&upn=' + params['upn'] + '&cp=' + params['cp'] + '&newshard=' + params['newshard'] + '&signature=' + params['sig'] + '';
 	}
 
 	var downloadCodeList = [];
-	for (var i = 0; i < FORMAT_LIST.length; i++) {
+	for(var i = 0; i < FORMAT_LIST.length; i++) {
 		var format = FORMAT_LIST[i];
 		// don't add lower quality FLV versions to prevent clutter
 		if (format == '5' && (videoURL['34'] != undefined || videoURL['35'] != undefined))
@@ -174,14 +167,13 @@ function run() {
 
 	// find parent container
 	var parentElement = document.getElementById('watch7-secondary-actions'); // share-panel-buttons
-	var rightElement = null; // document.getElementById('watch7-secondary-actions');
 	if (parentElement == null)
 		return;
 
 	// generate download code
 	var downloadCode = '<span class="yt-uix-button-content">' + DOWNLOAD_LINK_MESSAGE + '</span>';
 	var panelCode = '<ol style="padding: 10px;">';
-	for (var i = 0; i < downloadCodeList.length; i++) {
+	for(var i = 0; i < downloadCodeList.length; i++) {
 		panelCode += '<li><a style="text-decoration:none;" href="' + downloadCodeList[i].url + '"><span loop="' + i + '" id="' + (DOWNLOAD_YOUTUBE_FMT_ID + downloadCodeList[i].format) + '">' + downloadCodeList[i].label + '</span></a></li>';
 	}
 	panelCode += '</ol>';
@@ -189,7 +181,6 @@ function run() {
 
 	// add the button
 	var containerSpan = document.createElement('span');
-	// containerSpan.id = DOWNLOAD_YOUTUBE_SPAN_ID;
 
 	var leftmostButton = document.getElementById('watch7-secondary-actions').children[2] || null;
 
@@ -212,7 +203,7 @@ function run() {
 
 	panels.insertBefore(panelDiv, panels.children[2]);
 
-	for (var i = 0; i < downloadCodeList.length; i++) {
+	for(var i = 0; i < downloadCodeList.length; i++) {
 		var downloadFMT = document.getElementById(DOWNLOAD_YOUTUBE_FMT_ID + downloadCodeList[i].format);
 		if (downloadFMT.addEventListener) {
 			downloadFMT.addEventListener('click', downloadVideo, false);

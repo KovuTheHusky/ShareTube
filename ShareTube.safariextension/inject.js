@@ -34,18 +34,12 @@ var DOWNLOAD_LINK_MESSAGES = {
 	'sv' : 'Ladda ner'
 };
 var DOWNLOAD_LINK_MESSAGE = 'Download';
-var DOWNLOAD_YOUTUBE_SPAN_ID = 'download-youtube-video';
 var DOWNLOAD_YOUTUBE_FMT_ID = 'download-youtube-video-fmt';
-var DOWNLOAD_YOUTUBE_BUTTON_ID = 'download-youtube-video-button';
-var OLD_UI = 1, NEW_UI = 2;
 
 var videoId, videoTicket, videoFormats, videoTitle = '';
-var interfaceVersion = OLD_UI;
 run();
 
 function run() {
-	if (document.getElementById(DOWNLOAD_YOUTUBE_SPAN_ID))
-		return;
 
 	// obtain video ID, temporary ticket, formats map
 	var videoPlayer = document.getElementById('watch-player');
@@ -132,12 +126,12 @@ function run() {
 	}
 
 	var videoFormatsGroup = videoFormats.split(sep1);
-	for ( var i = 0; i < videoFormatsGroup.length; i++) {
+	for (var i = 0; i < videoFormatsGroup.length; i++) {
 		var exploded = videoFormatsGroup[i];
 		exploded = unescape(unescape(exploded)).replace(/\\\//g, '/').replace(/\\u0026/g, '&').replace(/url=.*\?/, '');
 		exploded = exploded.split('&');
 		var params = new Array();
-		for ( var j = 0; j < exploded.length; j++) {
+		for (var j = 0; j < exploded.length; j++) {
 			var param = exploded[j].split('=');
 			params[param[0]] = param[1];
 		}
@@ -145,7 +139,7 @@ function run() {
 	}
 
 	var downloadCodeList = [];
-	for ( var i = 0; i < FORMAT_LIST.length; i++) {
+	for (var i = 0; i < FORMAT_LIST.length; i++) {
 		var format = FORMAT_LIST[i];
 		// don't add lower quality FLV versions to prevent clutter
 		if (format == '5' && (videoURL['34'] != undefined || videoURL['35'] != undefined))
@@ -181,20 +175,17 @@ function run() {
 	// find parent container
 	var parentElement = document.getElementById('watch7-secondary-actions'); // share-panel-buttons
 	var rightElement = null; // document.getElementById('watch7-secondary-actions');
-	if (!rightElement && parentElement) {
-		interfaceVersion = NEW_UI;
-	}
 	if (parentElement == null)
 		return;
 
 	// generate download code
 	var downloadCode = '<span class="yt-uix-button-content">' + DOWNLOAD_LINK_MESSAGE + '</span>';
 	var panelCode = '<ol style="padding: 10px;">';
-	for ( var i = 0; i < downloadCodeList.length; i++) {
+	for (var i = 0; i < downloadCodeList.length; i++) {
 		panelCode += '<li><a style="text-decoration:none;" href="' + downloadCodeList[i].url + '"><span loop="' + i + '" id="' + (DOWNLOAD_YOUTUBE_FMT_ID + downloadCodeList[i].format) + '">' + downloadCodeList[i].label + '</span></a></li>';
 	}
 	panelCode += '</ol>';
-	downloadCode = '<button onclick=";return false;" title class="action-panel-trigger yt-uix-button yt-uix-button-text yt-uix-tooltip' + ((interfaceVersion == OLD_UI) ? ' yt-uix-tooltip-reverse' : '') + '" type="button" data-button-toggle="true" data-trigger-for="action-panel-download" role="button">' + downloadCode + '</button>';
+	downloadCode = '<button onclick=";return false;" title class="action-panel-trigger yt-uix-button yt-uix-button-text yt-uix-tooltip' + '" type="button" data-button-toggle="true" data-trigger-for="action-panel-download" role="button">' + downloadCode + '</button>';
 
 	// add the button
 	var containerSpan = document.createElement('span');
@@ -221,7 +212,7 @@ function run() {
 
 	panels.insertBefore(panelDiv, panels.children[2]);
 
-	for ( var i = 0; i < downloadCodeList.length; i++) {
+	for (var i = 0; i < downloadCodeList.length; i++) {
 		var downloadFMT = document.getElementById(DOWNLOAD_YOUTUBE_FMT_ID + downloadCodeList[i].format);
 		if (downloadFMT.addEventListener) {
 			downloadFMT.addEventListener('click', downloadVideo, false);

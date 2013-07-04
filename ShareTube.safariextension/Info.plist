@@ -54,6 +54,6 @@
 	<key>Update Manifest URL</key>
 	<string>http://assets.codeski.com/updates.plist</string>
 	<key>Website</key>
-	<string>http://codeski.com/</string>
+	<string>http://codeski.com</string>
 </dict>
 </plist>

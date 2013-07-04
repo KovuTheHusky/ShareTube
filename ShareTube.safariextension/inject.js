@@ -228,11 +228,11 @@ function run() {
 	}
 
 	function downloadVideo(e) {
-		var e = e || window.event; // IE
-		var elem = e.target || e.srcElement;
-		e.returnValue = false;
-		if (e.preventDefault) {
-			e.preventDefault();
+		var event = e || window.event; // IE
+		var elem = event.target || event.srcElement;
+		event.returnValue = false;
+		if (event.preventDefault) {
+			event.preventDefault();
 		}
 		var loop = elem.getAttribute('loop');
 		if (typeof GM_download == 'function') { // Firefox extension compatibility

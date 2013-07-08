@@ -69,7 +69,7 @@ function run() {
 	if (videoTitle == '')
 		videoTitle = 'video';
 
-	var videoURL = new Array();
+	var videoURL = [];
 	var sep = '%2C';
 	if (videoFormats.indexOf(',') > -1)
 		sep = ',';
@@ -77,7 +77,7 @@ function run() {
 	var videoFormatsGroup = videoFormats.split(sep);
 	for(var i = 0; i < videoFormatsGroup.length; i++) {
 		var pairs = unescape(unescape(videoFormatsGroup[i])).replace(/\\u0026/g, '&').replace(/url=.*\?/g, '').split('&');
-		var params = new Array();
+		var params = [];
 		for(var j = 0; j < pairs.length; j++) {
 			var param = pairs[j].split('=');
 			params[param[0]] = param[1];

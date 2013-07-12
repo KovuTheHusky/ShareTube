@@ -1,0 +1,10 @@
+{
+  "name": "sharetube",
+  "fullName": "ShareTube",
+  "id": "sharetube@codeski.com",
+  "description": "Adds a download button beneath videos on YouTube pages.",
+  "author": "Codeski",
+  "license": "MIT",
+  "version": "3.0.0",
+  "homepage": "http://codeski.com"
+}

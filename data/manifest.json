@@ -1,0 +1,31 @@
+{
+	"name": "ShareTube",
+	"version": "3.0.0",
+	"manifest_version": 2,
+	"description": "Adds a download button beneath videos on YouTube pages.",
+	"update_url": "http://codeski.com/updates.xml",
+	"content_scripts": [
+		{
+			"js": [ "jquery-1.10.2.min.js" ],
+			"matches": [
+				"http://*.youtube.com/watch*",
+				"https://*.youtube.com/watch*"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"js": [ "inject.js" ],
+			"matches": [
+				"http://*.youtube.com/watch*",
+				"https://*.youtube.com/watch*"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"content_security_policy": "default-src 'self' ",
+	"homepage_url": "http://codeski.com",
+	"permissions": [
+		"http://*.youtube.com/watch?*",
+		"https://*.youtube.com/watch?*"
+	]
+}

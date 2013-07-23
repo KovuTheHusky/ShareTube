@@ -1,6 +1,6 @@
 {
 	"name": "ShareTube",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"manifest_version": 2,
 	"description": "Adds a download button beneath videos on YouTube pages.",
 	"update_url": "http://codeski.com/updates.xml",
